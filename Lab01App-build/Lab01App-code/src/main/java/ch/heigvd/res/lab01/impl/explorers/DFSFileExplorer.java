@@ -27,7 +27,7 @@ public class DFSFileExplorer implements IFileExplorer {
      LinkedList<File> List_directorie = new LinkedList<File>();
      for (File file : rootDirectory.listFiles()) {
          if (file.isDirectory())
-             List_directorie.push(file);
+             List_directorie.add(file);
          if(file.isFile())
             vistor.visit(file);
      }
