@@ -134,16 +134,17 @@ public class Application implements IApplication {
      new File(nom_complete).mkdir();
      nom_complete += "/"+ filename;
      
-   PrintWriter  printwriter =new PrintWriter(new File(nom_complete),"uft-8");
-   printwriter.print(quote.getQuote());
-   printwriter.close();
-     
-   
-     
-     
-     
-     
-   // throw new UnsupportedOperationException("The student has not implemented this method yet.");
+      try (PrintWriter printwriter = new PrintWriter(new File(nom_complete),"uft-8")) {
+          printwriter.print(quote.getQuote());
+          printwriter.close();
+          
+          
+          
+          
+          
+          
+          // throw new UnsupportedOperationException("The student has not implemented this method yet.");
+      }
   }
   
   /**
