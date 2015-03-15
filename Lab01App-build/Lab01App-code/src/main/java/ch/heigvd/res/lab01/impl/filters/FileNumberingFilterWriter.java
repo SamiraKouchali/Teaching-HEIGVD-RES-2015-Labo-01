@@ -1,8 +1,10 @@
 package ch.heigvd.res.lab01.impl.filters;
 
+import ch.heigvd.res.lab01.impl.Utils;
 import java.io.FilterWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 /**
@@ -16,7 +18,9 @@ import java.util.logging.Logger;
  * @author Olivier Liechti
  */
 public class FileNumberingFilterWriter extends FilterWriter {
-  private  int count = 1 ;
+ 
+    private  int count = 1 ;
+ // private char Char_precedent;
 
   private static final Logger LOG = Logger.getLogger(FileNumberingFilterWriter.class.getName());
 
@@ -28,56 +32,66 @@ public class FileNumberingFilterWriter extends FilterWriter {
   public void write(String str, int off, int len) throws IOException {
    // throw new UnsupportedOperationException("The student has not implemented this method yet.");
      
+     String chaine = "";
+     String prochain_ligne[]= Utils.getNextLine(str.substring(off, len+off));
      
-        String chaine= count + "\t" ;
-        String chainetab;
-       for (int i=off; i< len+off ; i++ ){
-           
+     if (count ==1){
+         chaine = (count++) + "\t" ;
+         
+     } 
+     
+   //  for (int i=0 ; i< prochain_ligne.length; i++)
+         while ( ! prochain_ligne[0].isEmpty()){
+             chaine += prochain_ligne[0] + (count++) + "/t";
+            
+             prochain_ligne = Utils.getNextLine(prochain_ligne[1]);
+         }
+         
+         if ( !prochain_ligne[1].isEmpty())
+             chaine +=  prochain_ligne[1];
+             
+         out.write(chaine);
+  }
+      /*     
           // System.err.println("chine :" + chaine);
            if (str.charAt(i) != '\n'){
                chaine += Character.toString(str.charAt(i)); 
          //  System.err.print( chaine);
            }else{
               
-               chaine += str.charAt(i); 
-               out.write(chaine);
+                      chaine += str.charAt(i); 
+              
                // System.err.print( chaine);
-               count++;
-               chainetab = count + "\t" ;
+             
+               chainetab = (count++) + "\t" ;
                out.write(chainetab);
                       }
        }
       //chaine += count + "\t" ;
      // System.out.println( chaine);
     //  out.write(chaine);
+       String nextLine[] = Utils.getNextLine(str.substring(off, off + len));
+      String s = "";
+      
+      if(lineNumber == 1)
+         s = (lineNumber++) + "\t";
+      
+      while(!nextLine[0].isEmpty()) {
+         s += nextLine[0] + (lineNumber++) + "\t";
+         nextLine = Utils.getNextLine(nextLine[1]);
+      }     
+      
+      s += nextLine[1];
+      out.write(s);
   }
+*/
 
   @Override
   public void write(char[] cbuf, int off, int len) throws IOException {
-   /* String chaine = cbuf.toString();
+    /*
+      String chaine = new String (Arrays.toString(cbuf).substring(off, len+off));
       write(chaine);
-    /* 
-    char[] chaine = null;
-      int count=1;
-      int j = off;
-      for (int i=off; i< len + off; i++ ){
-      if (cbuf[i]!= '\n'){
-          chaine[j] = cbuf[i];
-          j++;
-      }
-      else{
-      count++;
-      chaine[j] = (char) count;
-      j++;
-      chaine[j] = '\t';
-              j++;
-              chaine[j] = cbuf[i];
-              j++;
-      }
-      }
-      out.write(chaine);
-    //
-  */
+     */
       throw new UnsupportedOperationException("The student has not implemented this method yet.");
             
             }
@@ -85,12 +99,18 @@ public class FileNumberingFilterWriter extends FilterWriter {
 
   @Override
   public void write(int c) throws IOException {
-    /*
+    
       String chaine = Character.toString((char) c);
-      write(chaine);
+     if (count ==1){
+      chaine += (count)+"/t";
+      count++;
+              }
+     out.write(chaine);
+  }
    
-  */
-       throw new UnsupportedOperationException("The student has not implemented this method yet.");
-            } 
-
+  
+       //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+             
+*/
+}
 }

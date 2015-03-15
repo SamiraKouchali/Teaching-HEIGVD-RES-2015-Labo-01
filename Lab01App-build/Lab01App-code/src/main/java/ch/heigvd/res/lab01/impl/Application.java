@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.logging.Level;
@@ -126,8 +127,23 @@ public class Application implements IApplication {
    * @throws IOException 
    */
   void storeQuote(Quote quote, String filename) throws IOException {
+     String nom_complete= WORKSPACE_DIRECTORY;
+     for (String tag: quote.getTags())
+         nom_complete += "/" +tag;
      
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+     new File(nom_complete).mkdir();
+     nom_complete += "/"+ filename;
+     
+   PrintWriter  printwriter =new PrintWriter(new File(nom_complete),"uft-8");
+   printwriter.print(quote.getQuote());
+   printwriter.close();
+     
+   
+     
+     
+     
+     
+   // throw new UnsupportedOperationException("The student has not implemented this method yet.");
   }
   
   /**
@@ -144,13 +160,20 @@ public class Application implements IApplication {
          * of the the IFileVisitor interface inline. You just have to add the body of the visit method, which should
          * be pretty easy (we want to write the filename, including the path, to the writer passed in argument).
          */
+          String chemain = file.getPath()+ "/n";
+          try {
+              writer.write(chemain);
+          } catch (IOException ex) {
+              Logger.getLogger(Application.class.getName()).log(Level.SEVERE, null, ex);
+          }
       }
     });
   }
   
   @Override
   public String getAuthorEmail() {
-    throw new UnsupportedOperationException("The student has not implemented this method yet.");
+    //throw new UnsupportedOperationException("The student has not implemented this method yet.");
+      return "samira.kouchali@heig-vd.ch";
   }
 
   @Override
